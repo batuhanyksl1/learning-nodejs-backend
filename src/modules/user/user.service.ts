@@ -6,13 +6,9 @@ export class UserService {
   constructor(private readonly userRepository: UserRepository) {}
 
   async createUser(data: CreateUserInput) {
-    // burada ileride:
-    // - email unique mi?
-    // - domain rule
-    // - transaction
     return this.userRepository.create({
-      ...data, // Email, name, password
-      role: ROLES.USER, // <-- Explicit Assignment (Açık Atama - Business Decision)
+      ...data,
+      role: ROLES.USER  // 👈 Bakın, varsayılan rol burada atanıyor
     });
   }
 
