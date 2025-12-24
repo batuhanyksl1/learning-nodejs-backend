@@ -1,10 +1,13 @@
 import { z } from "zod";
+import { ROLES } from "../../constants/roles";
 
 export const createUserSchema = z.object({
   body: z.object({
     email: z.string().email(),
     name: z.string().min(2),
     password: z.string().min(6),    
+    role: z.enum(Object.values(ROLES) as [string, ...string[]]),
+
   }),
 });
 
