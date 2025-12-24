@@ -23,7 +23,7 @@ export class AuthService {
       role: ROLES.USER
     });
 
-    const token = signToken({ id: user.id, email: user.email });
+    const token = signToken({ id: user.id, email: user.email, role: user.role});
 
     return { token };
   }
@@ -37,7 +37,7 @@ export class AuthService {
 
     if (!valid) throw new AppError("Invalid credential", 401);
 
-    const token = signToken({ id: user.id, email: user.email });
+    const token = signToken({ id: user.id, email: user.email, role: user.role});
 
     return { token };
 
