@@ -6,7 +6,7 @@ export class UserRepository {
     return UserModel.findOne({ email }).select("+password");
   }
 
-  async create(data: { email: string; name: string; password: string}) {
+  async create(data: { email: string; name: string; password: string, role: Role}) {
     const user = await UserModel.create(data);
     return user;
   }
