@@ -10,4 +10,4 @@ routes.get("/health", (_, res) => {
 
 routes.use("/user", userRoutes);
 
-routes.use("/auth", authRoutes)
+routes.use("/auth", authRoutes);

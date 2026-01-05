@@ -3,11 +3,6 @@ import { ROLES } from "../../constants/roles";
 
 const userSchema = new mongoose.Schema(
   {
-    id: {
-      type: String,
-      required: false,
-      unique: true
-    },
     email: {
       type: String,
       required: true,
@@ -25,10 +20,14 @@ const userSchema = new mongoose.Schema(
     role: {
       type: String,
       enum: Object.values(ROLES),
-      default: ROLES.USER
+      default: ROLES.USER,
     }
   },
   { timestamps: true }
 );
+
+userSchema.index({ email: 1 }, { unique: true });
+userSchema.index({ name: 1 });
+userSchema.index({ role: 1, createdAt: -1 });
 
 export const UserModel = mongoose.model("User", userSchema);

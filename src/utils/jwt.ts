@@ -1,6 +1,7 @@
-import jwt from "jsonwebtoken";
+import jwt, { JsonWebTokenError, TokenExpiredError } from "jsonwebtoken";
 import { env } from "../config";
 import { Role } from "../constants/roles";
+import { AppError } from "../errors/AppError";
 
 type JwtPayload = {
   id: string;
@@ -13,5 +14,16 @@ export const signToken = (payload: JwtPayload) => {
 };
 
 export const verifyToken = (token: string): JwtPayload => {
-  return jwt.verify(token, env.jwtSecret) as JwtPayload;
+  try {
+    return jwt.verify(token, env.jwtSecret) as JwtPayload;
+  } catch (error) {
+    if (error instanceof TokenExpiredError) {
+      throw new AppError("Token expired", 401);
+    }
+    if (error instanceof JsonWebTokenError) {
+      throw new AppError("Invalid token", 401);
+    }
+    // Diğer beklenmeyen hatalar için
+    throw new AppError("Token verification failed", 401);
+  }
 };

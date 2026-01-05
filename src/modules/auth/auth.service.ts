@@ -1,12 +1,17 @@
+import { inject, injectable } from "tsyringe";
 import { ROLES } from "../../constants/roles";
 import { AppError } from "../../errors/AppError";
 import { comparePassword, hashPassword } from "../../utils/hash";
 import { signToken } from "../../utils/jwt";
-import { UserRepository } from "../user/user.repository";
+import { IUserRepository } from "../user/user.repository.interface";
 import { LoginInput, RegisterInput } from "./auth.validator";
 
+@injectable()
 export class AuthService {
-  constructor(private readonly userRepo: UserRepository) {}
+  constructor(
+    @inject("UserRepository")
+    private readonly userRepo: IUserRepository
+  ) {}
 
   //kaydol
   async register(data: RegisterInput) {
