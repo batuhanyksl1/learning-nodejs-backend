@@ -1,8 +1,8 @@
-import { UserRepository } from "../user/user.repository";
-import { AuthService } from "./auth.service";
 import { Request, Response } from "express";
+import { container } from "tsyringe";
+import { AuthService } from "./auth.service";
 
-const authService = new AuthService(new UserRepository());
+const authService = container.resolve(AuthService);
 
 export class AuthController {
   static register = async (req: Request, res: Response) => {
