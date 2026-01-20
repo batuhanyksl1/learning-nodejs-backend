@@ -1,0 +1,11 @@
+version: "3.9"
+
+services:
+  backend:
+    image: learning-nodejs-backend
+    container_name: learning-nodejs-backend
+    volumes:
+      - .:/app
+    ports:
+      - "2000:3000"
+    command: npm run dev
